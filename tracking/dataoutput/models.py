@@ -2,6 +2,13 @@ from django.db import models
 from datetime import datetime
 
 
+CATEGORIES_OF_EXPENSES = [
+    ('w', 'employee benefits'),
+    ('b', 'purchase and repair of tools'),
+    ('t', 'transport costs')
+]
+
+
 class User(models.Model):
     name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
@@ -31,6 +38,7 @@ class UserWorkTime(models.Model):
 
 
 class Expenses(models.Model):
+    category = models.CharField(max_length=1, choices=CATEGORIES_OF_EXPENSES)
     name = models.CharField(max_length=50)
     description = models.CharField(max_length=200)
     summa = models.PositiveIntegerField()
