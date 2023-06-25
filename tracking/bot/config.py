@@ -1,3 +1,7 @@
+import os
+from dotenv import load_dotenv
+
 # Token tg bot
-BOT_TOKEN = '6208348875:AAEFxqAwZlC5hq3LozUo_soBGmbQ2XaZGh4'
-chat_id = 436644865
+load_dotenv()
+BOT_TOKEN = os.getenv('BOT_TOKEN')
+chat_id = os.getenv('chat_id')

@@ -128,5 +128,3 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Token tg bot
-API_TOKEN = '6208348875:AAEFxqAwZlC5hq3LozUo_soBGmbQ2XaZGh4'
