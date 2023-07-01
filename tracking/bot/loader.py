@@ -1,0 +1,13 @@
+import asyncio
+
+from aiogram import Bot, Dispatcher, executor, types
+import config
+from sql import create_pool
+
+loop = asyncio.get_event_loop()
+
+bot = Bot(token=config.BOT_TOKEN, parse_mode='HTML')
+dp = Dispatcher(bot)
+
+
+db = loop.run_until_complete(create_pool())
