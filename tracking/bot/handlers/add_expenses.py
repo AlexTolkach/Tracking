@@ -18,17 +18,66 @@ async def cansel(message: types.Message, state: FSMContext):
 @auth
 @dp.message_handler(commands=['add_expenses'])
 async def add_expense(message: types.Message):
-    await message.answer('Введите категорию расходов или нажмите /cancel')
+    markup = types.InlineKeyboardMarkup(
+        inline_keyboard=[
+            [
+                types.InlineKeyboardButton(text='Оплата труда', callback_data='w')
+            ],
+            [
+                types.InlineKeyboardButton(text='Покупка и ремонт инструмента', callback_data='b')
+            ],
+            [
+                types.InlineKeyboardButton(text='Транспортные расходы', callback_data='t')
+            ],
+            [
+                types.InlineKeyboardButton(text='Премии', callback_data='p')
+            ],
+        ]
+    )
+    await message.answer('Выберите категорию расходов или нажмите /cancel', reply_markup=markup)
     await Expenses.Category.set()
 
 
 @auth
-@dp.message_handler(state=Expenses.Category)
-async def add_expenses_name(message: types.Message):
-    category = message.text
+@dp.callback_query_handler(state=Expenses.Category, text_contains='w')
+async def add_expenses_category_w(call: types.CallbackQuery):
+    category = 'w'
     expenses['category'] = category
     print(expenses)
-    await message.answer(f'Категория расходов: {category}\n Введите название расходов или нажмите /cancel')
+    await call.message.answer(f'Категория расходов: Оплата труда\n Введите название расходов или нажмите /cancel')
+    await Expenses.Name.set()
+
+
+@auth
+@dp.callback_query_handler(state=Expenses.Category, text_contains='b')
+async def add_expenses_category_b(call: types.CallbackQuery):
+    category = 'b'
+    expenses['category'] = category
+    print(expenses)
+    await call.message.answer(f'Категория расходов: Покупка и ремонт инструмента\n '
+                              f'Введите название расходов или нажмите /cancel')
+    await Expenses.Name.set()
+
+
+@auth
+@dp.callback_query_handler(state=Expenses.Category, text_contains='t')
+async def add_expenses_category_t(call: types.CallbackQuery):
+    category = 't'
+    expenses['category'] = category
+    print(expenses)
+    await call.message.answer(f'Категория расходов: Транспортные расходы\n '
+                              f'Введите название расходов или нажмите /cancel')
+    await Expenses.Name.set()
+
+
+@auth
+@dp.callback_query_handler(state=Expenses.Category, text_contains='p')
+async def add_expenses_category_p(call: types.CallbackQuery):
+    category = 'p'
+    expenses['category'] = category
+    print(expenses)
+    await call.message.answer(f'Категория расходов: Премии\n '
+                              f'Введите название расходов или нажмите /cancel')
     await Expenses.Name.set()
 
 
@@ -86,7 +135,7 @@ async def add_expenses_summa(message: types.Message):
         ]
     )
     await message.answer(
-        f'Сумма расходов: {summa}',
+        f'Сумма расходов: {summa} рублей',
         reply_markup=markup
     )
     await Expenses.Confirm.set()
