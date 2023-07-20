@@ -1,7 +1,7 @@
 from typing import List
 
 from utils.db_api.database import users_table, session, user_work_time_table, expenses_table, project_table, smeta_table
-from sqlalchemy import select
+from sqlalchemy import select, insert
 
 
 async def add_user(**kwargs):
@@ -18,9 +18,9 @@ async def add_user_work_time(**kwargs):
     return new_user_work_time
 
 
-async def add_expenses(**kwargs):
-    new_expenses = expenses_table(**kwargs)
-    session.add(new_expenses)
+def add_expenses(*args, **kwargs):
+    new_expenses = [*args]
+    session.execute(insert(expenses_table), new_expenses)
     session.commit()
     return new_expenses
 

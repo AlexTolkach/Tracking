@@ -1,11 +1,13 @@
 import asyncpg
-from sqlalchemy import MetaData, create_engine
+from sqlalchemy import MetaData, create_engine, insert
 from config import PG_USER, PASSWORD, ip, DB_NAME, HOST
 from sqlalchemy.orm import Session
+from sqlalchemy.orm import registry
 
 engine = create_engine(f'postgresql+psycopg2://{PG_USER}:{PASSWORD}@{ip}/{DB_NAME}', echo=True)
 session = Session(engine)
 metadata_obj = MetaData()
+mapper_registry = registry()
 
 # Reflecting All Tables at Once
 metadata_obj.reflect(bind=engine)
