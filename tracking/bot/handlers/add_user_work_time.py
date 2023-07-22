@@ -14,6 +14,7 @@ work_time = {}
 @dp.message_handler(commands=['cansel'], state=WorkTime)
 async def cansel(message: types.Message, state: FSMContext):
     await message.answer('Отменено')
+    work_time.clear()
     await state.reset_state()
 
 

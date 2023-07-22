@@ -12,6 +12,7 @@ expenses = {}
 @dp.message_handler(commands=['cansel'], state=Expenses)
 async def cansel(message: types.Message, state: FSMContext):
     await message.answer('Отменено')
+    expenses.clear()
     await state.reset_state()
 
 

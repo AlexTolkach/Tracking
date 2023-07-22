@@ -13,6 +13,7 @@ income = {}
 @dp.message_handler(commands=['cansel'], state=Income)
 async def cansel(message: types.Message, state: FSMContext):
     await message.answer('Отменено')
+    income.clear()
     await state.reset_state()
 
 
