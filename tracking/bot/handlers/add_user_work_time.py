@@ -8,8 +8,6 @@ from config import auth
 from utils.db_api.db_commands import add_user_work_time
 
 work_time = {}
-new_work_time = {}
-lst = []
 
 
 @auth
@@ -91,23 +89,7 @@ async def change_work_time(call: types.CallbackQuery):
 @dp.callback_query_handler(text_contains='confirm', state=WorkTime.Confirm)
 async def confirm_work_time(call: types.CallbackQuery, state: FSMContext):
     await call.message.edit_reply_markup()
-    work_time_list = work_time.items()
-
-    for elem in work_time_list:
-        lst.append(elem)
-
-    date = lst[2]
-    time = lst[-1]
-    project_id = lst[0]
-    user_id = lst[1]
-    new_work_time.update([date, time, project_id, user_id])
-    print(new_work_time)
-
-    add_user_work_time(new_work_time)
-
+    add_user_work_time(work_time)
     work_time.clear()
-    new_work_time.clear()
-    lst.clear()
-
     await call.message.answer('Часы работы успешно добавлены')
     await state.reset_state()

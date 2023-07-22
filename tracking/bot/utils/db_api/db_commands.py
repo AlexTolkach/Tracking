@@ -1,14 +1,13 @@
 from typing import List
-
 from utils.db_api.database import users_table, session, user_work_time_table, expenses_table, project_table, smeta_table
 from sqlalchemy import select, insert
 
 
 def add_user(*args):
-    new_user = [*args]
-    session.execute(insert(users_table), new_user)
+    user = [*args]
+    session.execute(insert(users_table), user)
     session.commit()
-    return new_user
+    return user
 
 
 def add_user_work_time(*args):
