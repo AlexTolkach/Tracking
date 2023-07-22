@@ -19,9 +19,9 @@ class WorkTime(StatesGroup):
 
 
 class Income(StatesGroup):
-    Summa = State()
-    Date = State()
     Project = State()
+    Date = State()
+    Summa = State()
     Confirm = State()
 
 

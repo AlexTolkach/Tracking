@@ -122,3 +122,17 @@ async def add_work_time_create_keyboard():
         ]
     )
     return markup
+
+
+async def add_income_create_keyboard():
+    markup = InlineKeyboardMarkup(
+        inline_keyboard=[
+            [
+                InlineKeyboardButton(text='Сохранить сумму', callback_data='confirm')
+            ],
+            [
+                InlineKeyboardButton(text='Ввести заново', callback_data='change')
+            ]
+        ]
+    )
+    return markup

@@ -4,9 +4,9 @@ from utils.db_api.database import users_table, session, user_work_time_table, ex
 from sqlalchemy import select, insert
 
 
-async def add_user(**kwargs):
-    new_user = users_table(**kwargs)
-    session.add(new_user)
+def add_user(*args):
+    new_user = [*args]
+    session.execute(insert(users_table), new_user)
     session.commit()
     return new_user
 
@@ -25,11 +25,11 @@ def add_expenses(*args):
     return new_expenses
 
 
-async def add_smeta(**kwargs):
-    new_smeta = smeta_table(**kwargs)
-    session.add(new_smeta)
+def add_income(*args):
+    income = [*args]
+    session.execute(insert(smeta_table), income)
     session.commit()
-    return new_smeta
+    return income
 
 
 def get_users() -> List[users_table]:
