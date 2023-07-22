@@ -10,6 +10,13 @@ def add_user(*args):
     return user
 
 
+def add_project(*args):
+    project = [*args]
+    session.execute(insert(project_table), project)
+    session.commit()
+    return project
+
+
 def add_user_work_time(*args):
     new_user_work_time = [*args]
     session.execute(insert(user_work_time_table), new_user_work_time)
