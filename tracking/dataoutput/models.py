@@ -62,7 +62,7 @@ class UserWorkTime(models.Model):
     project = models.ForeignKey('Project', on_delete=models.CASCADE, verbose_name='Проект')
     user = models.ForeignKey('User', on_delete=models.CASCADE, verbose_name='Работник')
     date = models.DateField(auto_created=datetime.now(), verbose_name='Дата')
-    time_work = models.PositiveIntegerField(verbose_name='Время работы')
+    time_work = models.IntegerField(verbose_name='Время работы')
 
     class Meta:
         verbose_name_plural = 'Время работы'

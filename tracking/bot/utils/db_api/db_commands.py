@@ -11,14 +11,14 @@ async def add_user(**kwargs):
     return new_user
 
 
-async def add_user_work_time(**kwargs):
-    new_user_work_time = user_work_time_table(**kwargs)
-    session.add(new_user_work_time)
+def add_user_work_time(*args):
+    new_user_work_time = [*args]
+    session.execute(insert(user_work_time_table), new_user_work_time)
     session.commit()
     return new_user_work_time
 
 
-def add_expenses(*args, **kwargs):
+def add_expenses(*args):
     new_expenses = [*args]
     session.execute(insert(expenses_table), new_expenses)
     session.commit()
@@ -32,9 +32,9 @@ async def add_smeta(**kwargs):
     return new_smeta
 
 
-async def get_users() -> List[users_table]:
+def get_users() -> List[users_table]:
     return session.execute(select(users_table)).all()
 
 
-async def get_projects() -> List[project_table]:
-    return session.execute(select(project_table)).all()
+def get_projects() -> List[project_table]:
+    return session.execute(select(project_table).limit(3)).all()

@@ -153,7 +153,6 @@ async def change_expenses(call: types.CallbackQuery):
 @dp.callback_query_handler(text_contains='confirm', state=Expenses.Confirm)
 async def confirm_expenses(call: types.CallbackQuery, state: FSMContext):
     await call.message.edit_reply_markup()
-
     add_expenses(expenses)
     expenses.clear()
     await call.message.answer('Расходы успешно сохранены')

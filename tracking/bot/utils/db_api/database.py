@@ -1,5 +1,5 @@
 import asyncpg
-from sqlalchemy import MetaData, create_engine, insert
+from sqlalchemy import MetaData, create_engine
 from config import PG_USER, PASSWORD, ip, DB_NAME, HOST
 from sqlalchemy.orm import Session
 from sqlalchemy.orm import registry
