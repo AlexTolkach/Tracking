@@ -25,8 +25,9 @@ class Income(StatesGroup):
     Confirm = State()
 
 
-class Menu(StatesGroup):
-    Main = State()
-    Expenses = State()
-    WorkTime = State()
-    Income = State()
+class Project(StatesGroup):
+    Name = State()
+    Address = State()
+    Start_date = State()
+    End_date = State()
+    Confirm = State()

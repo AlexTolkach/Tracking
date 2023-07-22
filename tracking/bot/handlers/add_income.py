@@ -43,7 +43,7 @@ async def add_income_date(message: types.Message):
     date = message.text
     income['date'] = date
     print(income)
-    await message.answer(f'Введите сумму в рублях или нажмите /cancel')
+    await message.answer('Введите сумму в рублях или нажмите /cancel')
     await Income.Summa.set()
 
 
@@ -66,8 +66,8 @@ async def add_income_summa(message: types.Message):
 @dp.callback_query_handler(text_contains='change', state=Income.Confirm)
 async def change_income(call: types.CallbackQuery):
     await call.message.edit_reply_markup()
-    await call.message.answer('Введите количество часов заново')
-    await Income.Confirm.set()
+    await call.message.answer('Введите сумму заново')
+    await Income.Summa.set()
 
 
 @auth
