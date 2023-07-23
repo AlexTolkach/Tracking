@@ -31,3 +31,9 @@ class Project(StatesGroup):
     Start_date = State()
     End_date = State()
     Confirm = State()
+
+
+class Worker(StatesGroup):
+    Name = State()
+    Last_name = State()
+    Confirm = State()

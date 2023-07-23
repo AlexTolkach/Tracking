@@ -20,7 +20,7 @@ async def cansel(message: types.Message, state: FSMContext):
 @auth
 @dp.message_handler(commands=['add_project'])
 async def add_project_handler(message: types.Message):
-    await message.answer('Введите название проекта')
+    await message.answer('Введите название проекта или нажмите /cancel')
     await Project.Name.set()
 
 
@@ -30,7 +30,7 @@ async def add_project_name_handler(message: types.Message):
     name = message.text
     project['name'] = name
     print(project)
-    await message.answer('Введите адрес проекта')
+    await message.answer('Введите адрес проекта или нажмите /cancel')
     await Project.Address.set()
 
 
@@ -40,7 +40,7 @@ async def add_project_address_handler(message: types.Message):
     address = message.text
     project['address'] = address
     print(project)
-    await message.answer('Введите дату начала проекта в формате [ГГГГ-ММ-ДД]')
+    await message.answer(f'Введите дату начала проекта в формате [ГГГГ-ММ-ДД] или нажмите /cancel')
     await Project.Start_date.set()
 
 

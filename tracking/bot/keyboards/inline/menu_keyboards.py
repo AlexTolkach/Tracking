@@ -150,3 +150,17 @@ async def add_project_create_keyboard():
         ]
     )
     return markup
+
+
+async def add_worker_keyboard():
+    markup = InlineKeyboardMarkup(
+        inline_keyboard=[
+            [
+                InlineKeyboardButton(text='Добавить работника', callback_data='confirm')
+            ],
+            [
+                InlineKeyboardButton(text='Отмена', callback_data='change')
+            ]
+        ]
+    )
+    return markup
