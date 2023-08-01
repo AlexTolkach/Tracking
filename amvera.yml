@@ -1,6 +1,6 @@
-version: "3"
-services:
-  web:
+meta:
+  environment: web
+web:
     build:
       context: .
     container_name: web
@@ -20,27 +20,27 @@ services:
     depends_on:
       - postgresql
 
-  bot:
-    build:
-      context: .
-    container_name: bot
-    command:
-      sh -c "python bot/app.py"
-    env_file:
-      - ./.env
-    restart: on-failure
-    depends_on:
-      - web
+bot:
+  build:
+    context: .
+  container_name: bot
+  command:
+    sh -c "python bot/app.py"
+  env_file:
+    - ./.env
+  restart: on-failure
+  depends_on:
+    - web
 
-  postgresql:
-    image: postgres
-    restart: always
-    ports:
-      - "5432:5432"
-    env_file:
-      - ./.env
-    container_name: postgresql
-    volumes:
-      - pgdata:/var/lib/postgresql/data
+postgresql:
+  image: postgres
+  restart: always
+  ports:
+    - "5432:5432"
+  env_file:
+    - ./.env
+  container_name: postgresql
+  volumes:
+    - pgdata:/var/lib/postgresql/data
 volumes:
   pgdata: null

@@ -4,7 +4,7 @@ from config import PG_USER, PASSWORD, ip, DB_NAME, HOST
 from sqlalchemy.orm import Session
 from sqlalchemy.orm import registry
 
-engine = create_engine(f'postgresql+psycopg2://{PG_USER}:{PASSWORD}@{ip}/{DB_NAME}', echo=True)
+engine = create_engine(f'postgresql+psycopg2://{PG_USER}:{PASSWORD}@{HOST}/{DB_NAME}', echo=True)
 session = Session(engine)
 metadata_obj = MetaData()
 mapper_registry = registry()
