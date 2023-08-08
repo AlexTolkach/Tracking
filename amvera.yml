@@ -1,46 +1,45 @@
 meta:
-  environment: web
-web:
+  web:
+      build:
+        context: .
+      container_name: web
+      command:
+        /bin/sh -c "python3 manage.py makemigrations --force-color --no-input -v 3
+        && python3 manage.py makemigrations --merge --no-input -v 3
+        && python3 manage.py migrate --force-color -v 3
+        && python3 manage.py createsuperuser --noinput -v3
+        && python3 manage.py runserver 0.0.0.0:8000"
+      ports:
+        - "8000:8000"
+      volumes:
+        - .:/usr/src/tracking
+      env_file:
+        - ./.env
+      restart: on-failure
+      depends_on:
+        - postgresql
+
+  bot:
     build:
       context: .
-    container_name: web
+    container_name: bot
     command:
-      /bin/sh -c "python3 manage.py makemigrations --force-color --no-input -v 3
-      && python3 manage.py makemigrations --merge --no-input -v 3
-      && python3 manage.py migrate --force-color -v 3
-      && python3 manage.py createsuperuser --noinput -v3
-      && python3 manage.py runserver 0.0.0.0:8000"
-    ports:
-      - "8000:8000"
-    volumes:
-      - .:/usr/src/tracking
+      sh -c "python bot/app.py"
     env_file:
       - ./.env
     restart: on-failure
     depends_on:
-      - postgresql
+      - web
 
-bot:
-  build:
-    context: .
-  container_name: bot
-  command:
-    sh -c "python bot/app.py"
-  env_file:
-    - ./.env
-  restart: on-failure
-  depends_on:
-    - web
-
-postgresql:
-  image: postgres
-  restart: always
-  ports:
-    - "5432:5432"
-  env_file:
-    - ./.env
-  container_name: postgresql
+  postgresql:
+    image: postgres
+    restart: always
+    ports:
+      - "5432:5432"
+    env_file:
+      - ./.env
+    container_name: postgresql
+    volumes:
+      - pgdata:/var/lib/postgresql/data
   volumes:
-    - pgdata:/var/lib/postgresql/data
-volumes:
-  pgdata: null
+    pgdata: null

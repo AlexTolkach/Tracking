@@ -1,0 +1,24 @@
+databases:
+  - name: tracking
+    databaseName: tracking_6o38
+    user: tracking
+
+services:
+  - type: web
+    name: dataoutput
+    branch: main
+    runtime: python
+    startCommand:
+      /bin/sh -c "python3 manage.py makemigrations --force-color --no-input -v 3
+      && python3 manage.py makemigrations --merge --no-input -v 3
+      && python3 manage.py migrate --force-color -v 3
+      && python3 manage.py createsuperuser --noinput -v3
+      && python3 manage.py runserver 0.0.0.0:8000"
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: tracking
+          property: connectionString
+      - key: SECRET_KEY
+      - key: WEB_CONCURRENCY
+        value: 4
