@@ -19,6 +19,5 @@ services:
         fromDatabase:
           name: tracking
           property: connectionString
-      - key: SECRET_KEY
       - key: WEB_CONCURRENCY
         value: 4
