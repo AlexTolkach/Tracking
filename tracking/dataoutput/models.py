@@ -44,7 +44,7 @@ class Smeta(models.Model):
     project = models.OneToOneField('Project', on_delete=models.CASCADE, verbose_name='Проект')
 
     class Meta:
-        verbose_name_plural = 'Сметы'
+        verbose_name_plural = 'Доходы'
 
 
 class Director(models.Model):
