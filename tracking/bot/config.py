@@ -19,7 +19,6 @@ ip = os.getenv('ip')
 
 
 def auth(func):
-
     async def wrapper(message):
         if message['from']['id'] != int(chat_id):
             return await message.reply('access denied', reply=False)

@@ -1,6 +1,6 @@
 from aiogram import types
 from aiogram.dispatcher import FSMContext
-from keyboards.inline.menu_keyboards import add_worker_keyboard
+from keyboards.inline.menu_keyboards import add_worker_keyboard, cancel_button
 from states import Worker
 from loader import dp
 from config import auth
@@ -20,18 +20,20 @@ async def cansel(message: types.Message, state: FSMContext):
 @auth
 @dp.message_handler(commands=['add_worker'])
 async def add_worker_handler(message: types.Message):
-    await message.answer('Введите имя работника или нажмите /cancel')
+    markup = await cancel_button()
+    await message.answer('Введите имя работника или нажмите кнопку "Отмена"', reply_markup=markup)
     await Worker.Name.set()
 
 
 @auth
 @dp.message_handler(state=Worker.Name)
 async def add_worker_name_handler(message: types.Message):
+    markup = await cancel_button()
     name = message.text
     worker['name'] = name
     print(worker)
     await message.answer(f'Имя работника: {name}\n'
-                         f'Введите фамилию работника или нажмите /cancel')
+                         f'Введите фамилию работника или нажмите кнопку "Отмена"', reply_markup=markup)
     await Worker.Last_name.set()
 
 
@@ -47,7 +49,7 @@ async def add_worker_last_name_handler(message: types.Message):
 
 
 @auth
-@dp.callback_query_handler(text_contains='change', state=Worker.Confirm)
+@dp.callback_query_handler(text_contains='change', state=Worker)
 async def change_worker(call: types.CallbackQuery, state: FSMContext):
     await call.message.edit_reply_markup()
     worker.clear()

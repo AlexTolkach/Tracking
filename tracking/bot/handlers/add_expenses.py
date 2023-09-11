@@ -9,14 +9,6 @@ expenses = {}
 
 
 @auth
-@dp.message_handler(commands=['cansel'], state=Expenses)
-async def cansel(message: types.Message, state: FSMContext):
-    await message.answer('Отменено')
-    expenses.clear()
-    await state.reset_state()
-
-
-@auth
 @dp.message_handler(commands=['add_expenses'])
 async def add_expense(message: types.Message):
     markup = types.InlineKeyboardMarkup(
@@ -157,4 +149,12 @@ async def confirm_expenses(call: types.CallbackQuery, state: FSMContext):
     add_expenses(expenses)
     expenses.clear()
     await call.message.answer('Расходы успешно сохранены')
+    await state.reset_state()
+
+
+@auth
+@dp.message_handler(commands=['cansel'], state=Expenses)
+async def cansel(message: types.Message, state: FSMContext):
+    await message.answer('Отменено')
+    expenses.clear()
     await state.reset_state()
