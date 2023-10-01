@@ -10,14 +10,6 @@ worker = {}
 
 
 @auth
-@dp.message_handler(commands=['cansel'], state=Worker)
-async def cansel(message: types.Message, state: FSMContext):
-    await message.answer('Отменено')
-    worker.clear()
-    await state.reset_state()
-
-
-@auth
 @dp.message_handler(commands=['add_worker'])
 async def add_worker_handler(message: types.Message):
     markup = await cancel_button()
