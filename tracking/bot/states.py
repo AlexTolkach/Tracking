@@ -37,3 +37,8 @@ class Worker(StatesGroup):
     Name = State()
     Last_name = State()
     Confirm = State()
+
+
+class Salary(StatesGroup):
+    Name = State()
+    Confirm = State()

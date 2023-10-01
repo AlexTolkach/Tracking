@@ -1,3 +1,4 @@
+import datetime
 from typing import List
 from utils.db_api.database import users_table, session, user_work_time_table, expenses_table, project_table, smeta_table
 from sqlalchemy import select, insert
@@ -44,3 +45,31 @@ def get_users() -> List[users_table]:
 
 def get_projects() -> List[project_table]:
     return session.execute(select(project_table).limit(3)).all()
+
+
+def get_employee_work_time_data_for_the_last_five_days(*args):
+    data = session.execute(select(user_work_time_table, users_table)
+                           .join(user_work_time_table)
+                           .order_by(users_table.columns.id)
+                           .filter(user_work_time_table.columns.date >
+                                   datetime.date.today() - datetime.timedelta(days=5))
+                           .filter(users_table.columns.name == ' '.join([*args])))
+
+    return data
+
+
+a = ''
+count_time = 0
+for row in get_employee_work_time_data_for_the_last_five_days('Константин'):
+    count_time += int(row.time_work)
+    if f'Работник: {row.name} {row.last_name}\n' in a:
+        a += (f'Дата: {row.date}\n'
+              f'Время работы: {row.time_work}ч.\n')
+    else:
+        a += (f'Работник: {row.name} {row.last_name}\n'
+              f'Дата: {row.date}\n'
+              f'Время работы: {row.time_work}ч.\n')
+
+print(f'{a}\n'
+      f'Суммарное кол-во часов: {count_time}ч.\n'
+      f'Сумма: {count_time * 6}р.')

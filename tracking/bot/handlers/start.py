@@ -20,5 +20,6 @@ async def menu(message: types.Message):
                          f'2. Добавить доходы /add_income\n'
                          f'3. Добавить время работы /add_work_time\n'
                          f'4. Добавить новый проект /add_project\n'
-                         f'5. Добавить работника /add_worker'
+                         f'5. Добавить работника /add_worker\n'
+                         f'6. Рассчитать зарплату за последние 5 дней /calculate_salary'
                          )

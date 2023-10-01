@@ -1,7 +1,7 @@
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 from keyboards.inline.menu_keyboards import projects_keyboard, menu_cd_project, users_keyboard, menu_cd_user, \
-    add_work_time_create_keyboard
+    add_work_time_create_keyboard, cancel_button
 from states import WorkTime
 from loader import dp
 from config import auth
@@ -11,18 +11,10 @@ work_time = {}
 
 
 @auth
-@dp.message_handler(commands=['cansel'], state=WorkTime)
-async def cansel(message: types.Message, state: FSMContext):
-    await message.answer('Отменено')
-    work_time.clear()
-    await state.reset_state()
-
-
-@auth
 @dp.message_handler(commands=['add_work_time'])
 async def add_work_time(message: types.Message):
     markup = await projects_keyboard()
-    await message.answer('Выберите проект или нажмите /cancel', reply_markup=markup)
+    await message.answer('Выберите проект или нажмите кнопку "Отмена"', reply_markup=markup)
     await WorkTime.Project.set()
 
 
@@ -35,7 +27,7 @@ async def add_work_time_project_id(call: types.CallbackQuery, callback_data: dic
     print(work_time)
     markup = await users_keyboard()
     await call.message.answer(f'Проект: {project_name}\n'
-                              f'Выберите работника или нажмите /cancel',
+                              f'Выберите работника или нажмите кнопку "Отмена"',
                               reply_markup=markup)
     await WorkTime.User.set()
 
@@ -43,23 +35,25 @@ async def add_work_time_project_id(call: types.CallbackQuery, callback_data: dic
 @auth
 @dp.callback_query_handler(menu_cd_user.filter(), state=WorkTime.User)
 async def add_work_time_user_id(call: types.CallbackQuery, callback_data: dict):
+    markup = await cancel_button()
     user_id = callback_data.get('user_id')
     user_name = callback_data.get('user_name')
     work_time['user_id'] = user_id
     print(work_time)
     await call.message.answer(f'Работник: {user_name}\n'
-                              f'Введите дату в формате [ГГГГ-ММ-ДД]или нажмите /cancel')
+                              f'Введите дату в формате [ГГГГ-ММ-ДД]или нажмите кнопку "Отмена"', reply_markup=markup)
     await WorkTime.Date.set()
 
 
 @auth
 @dp.message_handler(state=WorkTime.Date)
 async def add_work_time_date(message: types.Message):
+    markup = await cancel_button()
     date = message.text
     work_time['date'] = date
     print(work_time)
     await message.answer(f'Дата: {date}\n'
-                         f'Введите количество часов в формате [0-23] или нажмите /cancel')
+                         f'Введите количество часов в формате [0-23] или нажмите кнопку "Отмена"', reply_markup=markup)
     await WorkTime.Time.set()
 
 
@@ -79,11 +73,13 @@ async def add_work_time_time(message: types.Message):
 
 
 @auth
-@dp.callback_query_handler(text_contains='change', state=WorkTime.Confirm)
-async def change_work_time(call: types.CallbackQuery):
+@dp.callback_query_handler(text_contains='change', state=WorkTime)
+async def change_work_time(call: types.CallbackQuery, state: FSMContext):
     await call.message.edit_reply_markup()
-    await call.message.answer('Введите количество часов заново')
-    await WorkTime.Time.set()
+    await call.message.answer('Добавление рабочих часов отменено')
+    work_time.clear()
+    print(work_time)
+    await state.reset_state()
 
 
 @auth

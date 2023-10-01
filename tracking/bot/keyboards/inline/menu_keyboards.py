@@ -24,6 +24,9 @@ async def projects_keyboard():
         markup.insert(
             InlineKeyboardButton(text=button_text, callback_data=callback_data),
         )
+    markup.insert(
+        InlineKeyboardButton(text='Отмена', callback_data='change'),
+    )
     return markup
 
 
@@ -48,6 +51,9 @@ async def users_keyboard():
         markup.insert(
             InlineKeyboardButton(text=button_text, callback_data=callback_data),
         )
+    markup.insert(
+        InlineKeyboardButton(text='Отмена', callback_data='change')
+    )
     return markup
 
 
@@ -58,7 +64,7 @@ async def add_work_time_create_keyboard():
                 InlineKeyboardButton(text='Сохранить время', callback_data='confirm')
             ],
             [
-                InlineKeyboardButton(text='Ввести заново', callback_data='change')
+                InlineKeyboardButton(text='Отмена', callback_data='change')
             ]
         ]
     )
@@ -93,6 +99,7 @@ async def add_project_create_keyboard():
     return markup
 
 
+# Кнопки для add_worker
 async def add_worker_keyboard():
     markup = InlineKeyboardMarkup(
         inline_keyboard=[
