@@ -1,3 +1,5 @@
+import datetime
+
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 
@@ -114,6 +116,13 @@ async def add_expenses_description(message: types.Message):
 async def add_expenses_date(message: types.Message):
     markup = await cancel_button()
     date = message.text
+    try:
+        datetime.datetime.strptime(date, '%Y-%m-%d')
+    except ValueError:
+        await message.answer('Не верный формат даты. Введите дату в формате [ГГГГ-ММ-ДД] или нажмите "Отмена"',
+                             reply_markup=markup)
+        return
+
     expenses['date'] = date
     print(expenses)
     await message.answer(f'Дата расходов: {date}\n'

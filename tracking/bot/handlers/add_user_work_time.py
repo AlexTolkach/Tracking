@@ -1,3 +1,5 @@
+import datetime
+
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 from keyboards.inline.menu_keyboards import projects_keyboard, menu_cd_project, users_keyboard, menu_cd_user, \
@@ -50,6 +52,13 @@ async def add_work_time_user_id(call: types.CallbackQuery, callback_data: dict):
 async def add_work_time_date(message: types.Message):
     markup = await cancel_button()
     date = message.text
+    try:
+        datetime.datetime.strptime(date, '%Y-%m-%d')
+    except ValueError:
+        await message.answer('Не верный формат даты. Введите дату в формате [ГГГГ-ММ-ДД] или нажмите "Отмена"',
+                             reply_markup=markup)
+        return
+
     work_time['date'] = date
     print(work_time)
     await message.answer(f'Дата: {date}\n'

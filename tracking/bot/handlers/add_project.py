@@ -1,3 +1,5 @@
+import datetime
+
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 from keyboards.inline.menu_keyboards import add_project_create_keyboard, cancel_button
@@ -44,7 +46,15 @@ async def add_project_address_handler(message: types.Message):
 @dp.message_handler(state=Project.Start_date)
 async def add_project_start_date_handler(message: types.Message):
     markup = await add_project_create_keyboard()
+    button_cancel = await cancel_button()
     start_date = message.text
+    try:
+        datetime.datetime.strptime(start_date, '%Y-%m-%d')
+    except ValueError:
+        await message.answer('Не верный формат даты. Введите дату в формате [ГГГГ-ММ-ДД] или нажмите "Отмена"',
+                             reply_markup=button_cancel)
+        return
+
     project['start_date'] = start_date
     print(project)
     await message.answer(f'Дата начала проекта: {start_date}', reply_markup=markup)

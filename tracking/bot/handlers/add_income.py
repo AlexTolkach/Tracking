@@ -1,3 +1,5 @@
+import datetime
+
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 from keyboards.inline.menu_keyboards import projects_keyboard, menu_cd_project, add_income_create_keyboard, \
@@ -36,9 +38,15 @@ async def add_income_project_id(call: types.CallbackQuery, callback_data: dict):
 async def add_income_date(message: types.Message):
     markup = await cancel_button()
     date = message.text
+    try:
+        datetime.datetime.strptime(date, '%Y-%m-%d')
+    except ValueError:
+        await message.answer('Не верный формат даты. Введите дату в формате [ГГГГ-ММ-ДД] или нажмите "Отмена"',
+                             reply_markup=markup)
+        return
     income['date'] = date
     print(income)
-    await message.answer('Введите сумму в рублях или нажмите "Отмена"')
+    await message.answer('Введите сумму в рублях или нажмите "Отмена"', reply_markup=markup)
     await Income.Summa.set()
 
 
@@ -49,7 +57,7 @@ async def add_income_summa(message: types.Message):
     try:
         summa = int(message.text)
     except ValueError:
-        await message.answer('Неверное значение, ведите целое число или нажмите "Отмена"')
+        await message.answer('Неверное значение, ведите целое число или нажмите "Отмена"', reply_markup=markup)
         return
     income['summa'] = summa
     print(income)

@@ -95,7 +95,7 @@ async def add_project_create_keyboard():
                 InlineKeyboardButton(text='Сохранить проект', callback_data='confirm')
             ],
             [
-                InlineKeyboardButton(text='Ввести заново', callback_data='change')
+                InlineKeyboardButton(text='Ввести дату заново', callback_data='change')
             ],
             [
                 InlineKeyboardButton(text='Отмена', callback_data='cancel')
