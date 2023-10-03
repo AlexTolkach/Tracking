@@ -1,4 +1,4 @@
-from loader import chat_id
+from config import chat_id
 from aiogram import Bot
 
 

@@ -25,7 +25,7 @@ async def projects_keyboard():
             InlineKeyboardButton(text=button_text, callback_data=callback_data),
         )
     markup.insert(
-        InlineKeyboardButton(text='Отмена', callback_data='change'),
+        InlineKeyboardButton(text='Отмена', callback_data='cancel'),
     )
     return markup
 
@@ -52,7 +52,7 @@ async def users_keyboard():
             InlineKeyboardButton(text=button_text, callback_data=callback_data),
         )
     markup.insert(
-        InlineKeyboardButton(text='Отмена', callback_data='change')
+        InlineKeyboardButton(text='Отмена', callback_data='cancel')
     )
     return markup
 
@@ -64,7 +64,7 @@ async def add_work_time_create_keyboard():
                 InlineKeyboardButton(text='Сохранить время', callback_data='confirm')
             ],
             [
-                InlineKeyboardButton(text='Отмена', callback_data='change')
+                InlineKeyboardButton(text='Отмена', callback_data='cancel')
             ]
         ]
     )
@@ -79,6 +79,9 @@ async def add_income_create_keyboard():
             ],
             [
                 InlineKeyboardButton(text='Ввести заново', callback_data='change')
+            ],
+            [
+                InlineKeyboardButton(text='Отмена', callback_data='cancel')
             ]
         ]
     )
@@ -93,6 +96,9 @@ async def add_project_create_keyboard():
             ],
             [
                 InlineKeyboardButton(text='Ввести заново', callback_data='change')
+            ],
+            [
+                InlineKeyboardButton(text='Отмена', callback_data='cancel')
             ]
         ]
     )
@@ -107,7 +113,7 @@ async def add_worker_keyboard():
                 InlineKeyboardButton(text='Добавить работника', callback_data='confirm')
             ],
             [
-                InlineKeyboardButton(text='Отмена', callback_data='change')
+                InlineKeyboardButton(text='Отмена', callback_data='cancel')
             ]
         ]
     )
@@ -119,7 +125,7 @@ async def cancel_button():
     markup = InlineKeyboardMarkup(
         inline_keyboard=[
             [
-                InlineKeyboardButton(text='Отмена', callback_data='change')
+                InlineKeyboardButton(text='Отмена', callback_data='cancel')
             ],
         ]
     )

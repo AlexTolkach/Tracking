@@ -16,10 +16,6 @@ async def get_worker_name_step1(message: types.Message):
     await Salary.Name.set()
 
 
-# @auth
-# @dp.message_handler()
-
-
 @auth
 @dp.callback_query_handler(menu_cd_user.filter(), state=Salary.Name)
 async def calculate_salary_worker(call: types.CallbackQuery, callback_data: dict, state: FSMContext):

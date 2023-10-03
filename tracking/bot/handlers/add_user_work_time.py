@@ -73,7 +73,7 @@ async def add_work_time_time(message: types.Message):
 
 
 @auth
-@dp.callback_query_handler(text_contains='change', state=WorkTime)
+@dp.callback_query_handler(text_contains='cancel', state=WorkTime)
 async def change_work_time(call: types.CallbackQuery, state: FSMContext):
     await call.message.edit_reply_markup()
     await call.message.answer('Добавление рабочих часов отменено')

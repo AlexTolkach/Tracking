@@ -41,7 +41,7 @@ async def add_worker_last_name_handler(message: types.Message):
 
 
 @auth
-@dp.callback_query_handler(text_contains='change', state=Worker)
+@dp.callback_query_handler(text_contains='cancel', state=Worker)
 async def change_worker(call: types.CallbackQuery, state: FSMContext):
     await call.message.edit_reply_markup()
     worker.clear()
