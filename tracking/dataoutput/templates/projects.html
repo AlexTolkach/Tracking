@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Проекты
+{% endblock %}
+
+{% block content %}
+
+Информация о проектах
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">id</th>
+      <th scope="col">Название</th>
+      <th scope="col">Адрес</th>
+      <th scope="col">Дата начала</th>
+      <th scope="col">Дата завершения</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for project in projects %}
+    <tr>
+      <td>{{project.id}}</td>
+      <td>{{project.name}}</td>
+      <td>{{project.address}}</td>
+      <td>{{project.start_date}}</td>
+      <td>{{project.end_date}}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}
